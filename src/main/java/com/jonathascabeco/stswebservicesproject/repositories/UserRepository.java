@@ -6,7 +6,4 @@ import com.jonathascabeco.stswebservicesproject.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	//instanciar obj repository que tem varias funcionalidades para interação com o usuario;
-	
-	
-
 }

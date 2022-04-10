@@ -1,25 +1,20 @@
 package com.jonathascabeco.stswebservicesproject.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_user") 
 public class User implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id // chave primária
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	// gerando id automaticamente, essa declaração funciona na maioria dos banco de dados; 
-	private Long id;
-	private String name;
-	private String email;
-	private String phone;
-	private String password;
 	
 //	Basic entity checklist:
 //	 Basic attributes; ok
@@ -32,7 +27,25 @@ public class User implements Serializable{
 //	 Serializable;
 		//é implementado na class para que o objeto seja transformado em cadeia de bytes, 
 		// objetavando ser trafegado em rede, gravado em arquivos etc;	
-
+	
+	
+	private static final long serialVersionUID = 1L;
+		
+	@Id // chave primária
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	// gerando id automaticamente, essa declaração funciona na maioria dos banco de dados; 
+	private Long id;
+	private String name;
+	private String email;
+	private String phone;
+	private String password;
+	
+	//associações:
+	//um para muitos (nome pego do UML):
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>(); 
+	// instanciando a coleção(somente o get e nao o set, pois é uma coleção);
+	
 	public User(){
 		
 	}
@@ -85,6 +98,11 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+
+	public List<Order> getOrders() {
+		return orders;
+	}	
 
 	@Override
 	public int hashCode() {
@@ -101,5 +119,5 @@ public class User implements Serializable{
 			return false;
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
-	}	
+	}
 }

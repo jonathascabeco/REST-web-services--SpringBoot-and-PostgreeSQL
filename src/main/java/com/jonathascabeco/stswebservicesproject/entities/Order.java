@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jonathascabeco.stswebservicesproject.entities.enums.OrderStatus;
 
 @Entity
 @Table(name = "tb_order") 
@@ -28,6 +29,10 @@ public class Order implements Serializable {
 	private Instant moment;
 	// a partir do Java 8 começou-se a utilizar a classe instant(muito melhor) ao invés de Date;	
 	
+	//enum
+	//tratamento integer somente dentro da classe, mas pro mundo externo é OrderStatus;
+	private Integer orderStatus;	
+		
 	//associação de chave estrangeira via JPA;
 	@ManyToOne
 	@JoinColumn(name = "client_id")
@@ -40,10 +45,11 @@ public class Order implements Serializable {
 	public Order() {		
 	}
 
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
@@ -65,6 +71,16 @@ public class Order implements Serializable {
 
 	public User getClient() {
 		return client;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus); //convertendo numero inteiro da classe em OrderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if(orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
 	}
 
 	public void setClient(User client) {

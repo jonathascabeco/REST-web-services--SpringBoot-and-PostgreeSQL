@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_user") 
 public class User implements Serializable{
@@ -42,6 +44,7 @@ public class User implements Serializable{
 	
 	//associações:
 	//um para muitos (nome pego do UML):
+	@JsonIgnore // para nao ocorrer loop entro o user e o order no jackson, essa anotaation deve estar em uma das pontas(user ou order)	
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>(); 
 	// instanciando a coleção(somente o get e nao o set, pois é uma coleção);

@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "tb_order") 
 //para nao dar conflito entre o nome da classe e nomes reservados do SQL;
@@ -22,8 +24,9 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	// a partir do Java 8 começou-se a utilizar a classe instant(muito melhor) ao invés de Date;
+	// a partir do Java 8 começou-se a utilizar a classe instant(muito melhor) ao invés de Date;	
 	
 	//associação de chave estrangeira via JPA;
 	@ManyToOne

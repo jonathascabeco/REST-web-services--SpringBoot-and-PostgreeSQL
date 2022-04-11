@@ -55,10 +55,6 @@ public class OrderItemPk implements Serializable{
 			return false;
 		OrderItemPk other = (OrderItemPk) obj;
 		return Objects.equals(order, other.order) && Objects.equals(product, other.product);
-	}
-	
-	//nao possui construtores;
-	
-	
-	
+	}	
+	//nao possui construtores;	
 }

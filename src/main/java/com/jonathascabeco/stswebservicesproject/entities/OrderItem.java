@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jonathascabeco.stswebservicesproject.entities.pk.OrderItemPk;
 
 @Entity
@@ -16,7 +17,8 @@ public class OrderItem implements Serializable {
 	
 	@EmbeddedId
 	//primeiro atributo vai ser: identificador o corespondente a chave primaria;
-	private OrderItemPk id;
+	private OrderItemPk id = new OrderItemPk(); // sempre instanciar;
+	
 	private Integer quantity;
 	private Double price;
 	
@@ -33,6 +35,8 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 	
+	@JsonIgnore
+	// no java enterprise o que vale é o metodo get;Por isso o jsonignore aquim para evitar o loop com o pedido;
 	public Order getOrder() {
 		return id.getOrder();
 	}

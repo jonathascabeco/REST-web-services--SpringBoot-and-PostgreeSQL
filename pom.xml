@@ -9,7 +9,7 @@
 		<version>2.6.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
+
 	<groupId>com.jonathascabeco</groupId>
 	<artifactId>sts-web-services-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -40,6 +40,13 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

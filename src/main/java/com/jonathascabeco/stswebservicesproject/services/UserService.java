@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jonathascabeco.stswebservicesproject.entities.User;
 import com.jonathascabeco.stswebservicesproject.repositories.UserRepository;
+import com.jonathascabeco.stswebservicesproject.services.exceptions.ResourceNotFoundException;
 
 //@Component // registra como componente do spring para ser injetado automaticament com autowired
 //@Repository// registrar um repository
@@ -27,7 +28,9 @@ public class UserService {
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
 		//retorna um objeto optional, existe desde o java 8;
-		return obj.get();
+		//lança exceção quando nao houver nenhum usuario no optional
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		// vai tentar fazer o get se nao conseguir manda exceção;
 	}
 	
 	public User insert(User obj) {

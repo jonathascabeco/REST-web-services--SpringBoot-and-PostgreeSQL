@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,17 @@ public class UserResource {
 		//converte para uri, metodo de resposta do http;
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);		
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	//nao pode deletar usuario com pedido, seria uma violação de integridade;
+	//para deletar no padrao Rest o metodo http para deletar é o "delete"
+	public ResponseEntity<Void> delete(@PathVariable Long id){
+		//nao vai retornar nada no corpo somente deletar por isso void
+		// pra o long id posssa ser reconhecido como uma variavel  da url coloca-se a anotação acima;
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+		//nocontent retorna uma resposta vazia, codigo http 204, ele ja trata isso;
 	}
 	
 }

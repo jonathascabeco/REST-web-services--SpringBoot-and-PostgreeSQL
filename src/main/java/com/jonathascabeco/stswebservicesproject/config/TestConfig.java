@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.jonathascabeco.stswebservicesproject.entities.Category;
 import com.jonathascabeco.stswebservicesproject.entities.Order;
 import com.jonathascabeco.stswebservicesproject.entities.OrderItem;
+import com.jonathascabeco.stswebservicesproject.entities.Payment;
 import com.jonathascabeco.stswebservicesproject.entities.Product;
 import com.jonathascabeco.stswebservicesproject.entities.User;
 import com.jonathascabeco.stswebservicesproject.entities.enums.OrderStatus;
@@ -87,6 +88,12 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		//salavar um obj um para um
+		o1.setPayment(pay1);//associando o order1 com o payment;
+		
+		orderRepository.save(o1);//salvando novamente o o1 com o payment novo;
 	}
 
 }

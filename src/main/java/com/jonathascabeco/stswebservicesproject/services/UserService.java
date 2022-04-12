@@ -37,4 +37,21 @@ public class UserService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	
+	public User update(Long id, User obj) {
+		 User entity = repository.getById(id);
+		//instancia o usuario mas nao vai no bd, vai deixar um objeto monitorado pelo jpa, 
+		//para posteriomente instanciar algo no bd, o getone ele pega o obj e espera, di
+		//ferente do findById que tem de entrar no bd e traze-lo para app;
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+		
+	}
 }

@@ -3,6 +3,8 @@ package com.jonathascabeco.stswebservicesproject.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -58,6 +60,7 @@ public class UserService {
 	}
 
 	public User update(Long id, User obj) {
+		try {
 		User entity = repository.getById(id);
 		// instancia o usuario mas nao vai no bd, vai deixar um objeto monitorado pelo
 		// jpa,
@@ -66,6 +69,10 @@ public class UserService {
 		// ferente do findById que tem de entrar no bd e traze-lo para app;
 		updateData(entity, obj);
 		return repository.save(entity);
+		}
+		catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {

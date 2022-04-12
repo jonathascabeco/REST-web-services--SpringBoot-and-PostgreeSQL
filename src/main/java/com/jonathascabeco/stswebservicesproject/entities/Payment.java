@@ -15,22 +15,22 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_payment") 
+@Table(name = "tb_payment")
 public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@Id // chave primária
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
-	
-	@JsonIgnore // nao dar loop com o pedido;
-	@OneToOne // modo de declarar uma clase um para um dependente;
-	@MapsId //
+
+	@JsonIgnore
+	@OneToOne
+	@MapsId
 	private Order order;
-	
+
 	public Payment() {
-		
+
 	}
 
 	public Payment(Long id, Instant moment, Order order) {
@@ -79,5 +79,5 @@ public class Payment implements Serializable {
 			return false;
 		Payment other = (Payment) obj;
 		return Objects.equals(id, other.id);
-	}	
+	}
 }

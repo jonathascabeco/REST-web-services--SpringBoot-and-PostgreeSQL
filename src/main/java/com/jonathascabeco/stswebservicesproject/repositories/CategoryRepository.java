@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jonathascabeco.stswebservicesproject.entities.Category;
 
-public interface CategoryRepository extends JpaRepository<Category, Long>{
-	//instanciar obj repository que tem varias funcionalidades para interação com o usuario;
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+
 }

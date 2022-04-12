@@ -14,42 +14,38 @@ import com.jonathascabeco.stswebservicesproject.entities.pk.OrderItemPk;
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EmbeddedId
-	//primeiro atributo vai ser: identificador o corespondente a chave primaria;
-	private OrderItemPk id = new OrderItemPk(); // sempre instanciar;
-	
+	private OrderItemPk id = new OrderItemPk();
+
 	private Integer quantity;
 	private Double price;
-	
+
 	public OrderItem() {
-		
+
 	}
 
 	public OrderItem(Order order, Product product, Integer quantity, Double price) {
 		super();
-		//forma de instanciar chave composta;
 		id.setOrder(order);
 		id.setProduct(product);
 		this.quantity = quantity;
 		this.price = price;
 	}
-	
+
 	@JsonIgnore
-	// no java enterprise o que vale é o metodo get;Por isso o jsonignore aquim para evitar o loop com o pedido;
 	public Order getOrder() {
 		return id.getOrder();
 	}
-	
+
 	public void setOrder(Order order) {
 		id.setOrder(order);
 	}
-	
-	
+
 	public Product getProduct() {
 		return id.getProduct();
 	}
-	
+
 	public void setProduct(Product product) {
 		id.setProduct(product);
 	}
@@ -69,8 +65,7 @@ public class OrderItem implements Serializable {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	
-	//no java enterprise o que vale é o get, por isso ele está na frente do subTotal;
+
 	public Double getSubTotal() {
 		return price * quantity;
 	}
@@ -90,6 +85,6 @@ public class OrderItem implements Serializable {
 			return false;
 		OrderItem other = (OrderItem) obj;
 		return Objects.equals(id, other.id);
-	}	
-	
+	}
+
 }

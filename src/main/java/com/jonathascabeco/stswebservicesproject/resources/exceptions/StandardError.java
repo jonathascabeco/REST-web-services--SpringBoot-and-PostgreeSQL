@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
-	// obj retornado esta na resposta da requisição, quem trabalha com isso é o
-	// resources
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant timestamp;
@@ -69,5 +67,4 @@ public class StandardError implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
-
 }

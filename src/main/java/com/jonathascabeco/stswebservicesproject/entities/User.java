@@ -15,44 +15,26 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tb_user") 
-public class User implements Serializable{
-	
-//	Basic entity checklist:
-//	 Basic attributes; ok
-//	 Associations (instantiate collections); como é a primeira entidade não possui associações ainda;
-//	 Constructors;
-		//como esta sendo usado framework, obrigatorio colocar o vazio.
-//	 Getters & Setters (collections: only get);
-//	 hashCode & equals;
-		//podem ser feitos para comparar qualquer critério(atributos da entidade), nesse, por padrão, instaurou-se o id;
-//	 Serializable;
-		//é implementado na class para que o objeto seja transformado em cadeia de bytes, 
-		// objetavando ser trafegado em rede, gravado em arquivos etc;	
-	
-	
+@Table(name = "tb_user")
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-		
-	@Id // chave primária
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	// gerando id automaticamente, essa declaração funciona na maioria dos banco de dados; 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
 	private String phone;
 	private String password;
-	
-	//associações:
-	//um para muitos (nome pego do UML):
-	@JsonIgnore // para nao ocorrer loop entro o user e o order no jackson, essa anotaation deve estar em uma das pontas(user ou order)	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
-	private List<Order> orders = new ArrayList<>(); 
-	// instanciando a coleção(somente o get e nao o set, pois é uma coleção);
-	
-	public User(){
-		
+	private List<Order> orders = new ArrayList<>();
+
+	public User() {
+
 	}
-	
+
 	public User(Long id, String name, String email, String phone, String password) {
 		super();
 		this.id = id;
@@ -101,11 +83,10 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
 	public List<Order> getOrders() {
 		return orders;
-	}	
+	}
 
 	@Override
 	public int hashCode() {

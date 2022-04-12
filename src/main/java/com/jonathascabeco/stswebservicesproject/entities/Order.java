@@ -21,41 +21,30 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jonathascabeco.stswebservicesproject.entities.enums.OrderStatus;
 
 @Entity
-@Table(name = "tb_order") 
-//para nao dar conflito entre o nome da classe e nomes reservados do SQL;
+@Table(name = "tb_order")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	// a partir do Java 8 começou-se a utilizar a classe instant(muito melhor) ao invés de Date;	
-	
-	//enum
-	//tratamento integer somente dentro da classe, mas pro mundo externo é OrderStatus;
-	private Integer orderStatus;	
-		
-	//associação de chave estrangeira via JPA;
+
+	private Integer orderStatus;
+
 	@ManyToOne
 	@JoinColumn(name = "client_id")
-	//associações(seguir nomenclatura):
-	//muitos para um;
 	private User client;
-	
+
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
-	
-	// modo de declarar uma classe um para um superior;
-	//Mapeando as duas entidade para ter o mesmo id, um para um com mesmo id tem de ser essa declaração;
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) 
+
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
-	
-	//construtores:
-	
-	public Order() {		
+
+	public Order() {
 	}
 
 	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
@@ -84,8 +73,8 @@ public class Order implements Serializable {
 
 	public User getClient() {
 		return client;
-	}	
-	
+	}
+
 	public Payment getPayment() {
 		return payment;
 	}
@@ -94,27 +83,27 @@ public class Order implements Serializable {
 		this.payment = payment;
 	}
 
-	public Set<OrderItem> getItems(){
+	public Set<OrderItem> getItems() {
 		return items;
 	}
 
 	public OrderStatus getOrderStatus() {
-		return OrderStatus.valueOf(orderStatus); //convertendo numero inteiro da classe em OrderStatus;
+		return OrderStatus.valueOf(orderStatus);
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
-		if(orderStatus != null) {
+		if (orderStatus != null) {
 			this.orderStatus = orderStatus.getCode();
 		}
 	}
 
 	public void setClient(User client) {
 		this.client = client;
-	}	
-	
+	}
+
 	public Double getTotal() {
 		double sum = 0.0;
-		for(OrderItem x : items) {
+		for (OrderItem x : items) {
 			sum += x.getSubTotal();
 		}
 		return sum;
@@ -135,6 +124,6 @@ public class Order implements Serializable {
 			return false;
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
-	}	
-	
+	}
+
 }

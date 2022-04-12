@@ -29,4 +29,8 @@ public class UserService {
 		//retorna um objeto optional, existe desde o java 8;
 		return obj.get();
 	}
+	
+	public User insert(User obj) {
+		return repository.save(obj);// ja retorna o obj inserido no banco de dados;
+	}
 }
